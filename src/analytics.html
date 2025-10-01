@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BetAnalytics Pro — Standalone</title>
+
+ 
+<link rel="stylesheet" href="../dist/output.css">
+
+ 
+  <style>
+    :root{
+     
+      --background: 220 26% 6%;
+      --foreground: 210 40% 98%;
+      --card: 220 23% 9%;
+      --primary: 142 76% 36%;
+      --secondary: 220 20% 14%;
+      --accent: 45 93% 47%;
+      --destructive: 0 62.8% 50%;
+      --success: 142 76% 36%;
+      --warning: 38 92% 50%;
+      --border: 220 20% 18%;
+    
+      --muted-foreground: 215 20.2% 65.1%;
+    }
+
+    body { background: hsl(var(--background)); color: hsl(var(--foreground)); }
+
+   
+    .bg-card { background: hsl(var(--card)); }
+    .bg-card-80 { background: linear-gradient(145deg, hsla(var(--card) / 1), hsla(var(--card) / 0.8)); }
+    .bg-primary { color: hsl(var(--primary)); }
+    .text-primary { color: hsl(var(--primary)); }
+    .bg-primary-10 { background: hsl(var(--primary) / 0.10); }
+    .bg-accent { color: hsl(var(--accent)); }
+    .text-accent { color: hsl(var(--accent)); }
+    .bg-accent-10 { background: hsl(var(--accent) / 0.10); }
+    .text-destructive { color: hsl(var(--destructive)); }
+    .text-success { color: hsl(var(--success)); }
+    .text-warning { color: hsl(var(--warning)); }
+    .bg-secondary { background: hsl(var(--secondary)); }
+    .bg-secondary-30 { background: hsl(var(--secondary) / 0.30); }
+    .border-border { border-color: hsl(var(--border)); }
+    .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+
+   
+    .gradient-clip {
+      background-image: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--primary)));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .card-style {
+      border: 1px solid hsla(var(--border) / 0.35);
+      background: linear-gradient(145deg, hsla(var(--card) / 1), hsla(var(--card) / 0.9));
+      border-radius: 1rem;
+    }
+
+    .container { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body class="antialiased font-sans">
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="bg-gradient-to-r from-primary/10 to-accent/10 border-b border-border sticky top-0 z-50">
+    <div class="container px-6 lg:px-4 flex items-center justify-between h-16">
+      <!-- Logo + Title -->
+      <div class="flex items-center space-x-3">
+        <!---logo.png -->
+        <img src="../public/images/logo.png" alt="Logo" class="h-8 w-auto" />
+        <span class="text-xl font-bold gradient-clip">BetAnalytics Pro</span>
+      </div>
+
+      <!-- How the nav will look like on a Desktop  -->
+      <nav class="hidden md:flex items-center space-x-6 font-medium">
+        <a href="#" class="hover:text-primary transition-colors">Home</a>
+        <a href="#features" class="hover:text-primary transition-colors">Features</a>
+        <a href="#stats" class="hover:text-primary transition-colors">Stats</a>
+        <a href="#matches" class="hover:text-primary transition-colors">Matches</a>
+      </nav>
+
+      <!-- Actions (desktop) -->
+      <div class="hidden md:flex items-center space-x-3">
+        <button id="loginBtn" class="px-4 py-2 rounded-md font-semibold text-white" style="background:linear-gradient(90deg,hsl(var(--primary)),hsl(var(--accent)));box-shadow:0 6px 18px rgba(0,0,0,0.12);">Login</button>
+        <button id="registerBtn" class="px-4 py-2 rounded-md font-semibold text-white" style="background:linear-gradient(90deg,hsl(var(--accent)),hsl(var(--primary)));box-shadow:0 6px 18px rgba(0,0,0,0.12);">Register</button>
+      </div>
+
+      <!-- Mobile hamburger  for when viewing on mobile phone-->
+      <button id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden p-2 rounded-lg hover:bg-primary/10">
+        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-6">
+      <div class="space-y-3">
+        <a href="#" class="block text-lg font-medium">Home</a>
+        <a href="#features" class="block text-lg font-medium">Features</a>
+        <a href="#stats" class="block text-lg font-medium">Stats</a>
+        <a href="#matches" class="block text-lg font-medium">Matches</a>
+      </div>
+      <div class="mt-4 space-y-3">
+        <button class="w-full px-4 py-2 rounded-md font-semibold text-white" style="background:linear-gradient(90deg,hsl(var(--primary)),hsl(var(--accent)));">Login</button>
+        <button class="w-full px-4 py-2 rounded-md font-semibold text-white" style="background:linear-gradient(90deg,hsl(var(--accent)),hsl(var(--primary)));">Register</button>
+      </div>
+    </div>
+  </header>
+  
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden py-20">
+    <div class="container px-6 lg:px-4 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <div class="inline-flex items-center rounded-full px-4 py-2 bg-accent-10 text-accent">
+          <!-- inline Target icon -->
+          <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>
+          99.9% Data Accuracy Revolution
+        </div>
+
+        <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight">
+          <span class="block text-foreground">We Scrape The</span>
+          <span class="block gradient-clip text-5xl lg:text-7xl">Missing 0.1%</span>
+          <span class="block text-xl lg:text-2xl text-muted-foreground mt-2 font-normal">That Changes Everything</span>
+        </h1>
+
+        <div class="card-style p-6 space-y-4">
+          <p class="text-lg text-muted-foreground">
+            While competitors settle for <span class="text-destructive font-semibold">95% accuracy</span>, we obsessively mine
+            the data fragments they ignore:
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 text-sm text-accent">
+            <div class="space-y-2">
+              <div class="flex items-center"><span class="inline-block w-2 h-2 rounded-full bg-accent mr-2"></span>Referee micro-patterns</div>
+              <div class="flex items-center"><span class="inline-block w-2 h-2 rounded-full bg-accent mr-2"></span>Weather impact models</div>
+              <div class="flex items-center"><span class="inline-block w-2 h-2 rounded-full bg-accent mr-2"></span>Crowd sentiment analysis</div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center"><span class="inline-block w-2 h-2 rounded-full bg-accent mr-2"></span>Injury depth analysis</div>
+              <div class="flex items-center"><span class="inline-block w-2 h-2 rounded-full bg-accent mr-2"></span>Travel fatigue metrics</div>
+              <div class="flex items-center"><span class="inline-block w-2 h-2 rounded-full bg-accent mr-2"></span>847+ other data points</div>
+            </div>
+          </div>
+
+          <p class="text-sm text-primary font-semibold">That final 0.1% is where fortunes are made and lost.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="px-8 py-3 rounded-lg text-white font-semibold" style="background:linear-gradient(90deg,hsl(var(--primary)),hsl(var(--accent)));">Start Analyzing
+            <!-- ArrowRight SVG -->
+            <svg class="inline-block h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="px-8 py-3 rounded-lg border border-border text-foreground hover:bg-primary/5">View Demo</button>
+        </div>
+
+        <div class="bg-secondary-30 p-6 rounded-2xl border border-border mt-6">
+          <div class="text-center mb-4"><h3 class="text-lg font-semibold">The Competitive Edge</h3></div>
+          <div class="grid grid-cols-3 gap-6">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-success">99.9%</div>
+              <div class="text-sm text-muted-foreground">Data Accuracy</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-accent">847+</div>
+              <div class="text-sm text-muted-foreground">Data Points</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary">Real-time</div>
+              <div class="text-sm text-muted-foreground">Scraping</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="absolute inset-0 rounded-3xl blur-3xl" style="background:linear-gradient(135deg, hsla(var(--primary)/0.12), hsla(var(--accent)/0.12)); filter:blur(18px)"></div>
+        <div class="relative card-style p-6">
+          
+          <img src="../public/images/logo.png" alt="Sports Analytics Dashboard" class="w-full h-auto rounded-xl shadow-2xl" />
+          <div class="absolute top-6 right-6 bg-success text-white px-3 py-2 rounded-lg" style="background: hsl(var(--success)); color: white">
+            <div class="flex items-center space-x-2">
+              <!-- TrendingUp icon -->
+              <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17l6-6 4 4 8-8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="font-semibold">+12.5%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA ADVANTAGE -->
+  <section class="py-20" style="background: linear-gradient(180deg, hsla(var(--secondary)/0.12), transparent);">
+    <div class="container px-6 lg:px-4">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent-10 text-accent border" style="border-color: hsla(var(--accent)/0.25);">
+          <!-- Database Icon -->
+          <svg class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="6" rx="9" ry="3" stroke-width="1.35"/><path d="M3 6v6c0 1.657 4.03 3 9 3s9-1.343 9-3V6" stroke-width="1.35"/></svg>
+          Data Advantage Breakdown
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-bold my-6">Why <span class="gradient-clip">99.9%</span> Matters</h2>
+        <p class="text-xl text-muted-foreground max-w-3xl mx-auto">We don't just collect more data—we collect the RIGHT data that others can't see or won't scrape.</p>
+      </div>
+
+      <!-- competition table (rows will be injected by analytics.js) -->
+      <div class="card-style rounded-xl overflow-hidden mb-12">
+        <div class="p-6">
+          <h3 class="text-2xl text-center font-semibold mb-4">The Competition Breakdown</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-border">
+                  <th class="text-left p-4 font-semibold">Platform</th>
+                  <th class="text-center p-4 font-semibold">Accuracy</th>
+                  <th class="text-center p-4 font-semibold">Data Points</th>
+                  <th class="text-center p-4 font-semibold">Updates</th>
+                  <th class="text-center p-4 font-semibold">Price</th>
+                </tr>
+              </thead>
+              <tbody id="competitors-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <h3 class="text-3xl font-bold mb-6">The <span class="text-accent">Missing 0.1%</span> We Scrape</h3>
+          <p class="text-lg text-muted-foreground mb-8">While others focus on obvious stats like team records and basic player stats, we dig deeper into the micro-factors that actually determine game outcomes.</p>
+
+          <div class="grid gap-3" id="our-advantages"></div>
+        </div>
+
+        <div class="card-style p-6">
+          <div class="flex items-center mb-6">
+            <svg class="h-6 w-6 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="1.25"/></svg>
+            <h4 class="text-lg font-semibold">Real Example: Last Week</h4>
+          </div>
+
+          <div class="bg-secondary-30 rounded-lg p-4 mb-6">
+            <h4 class="font-semibold mb-2 text-primary">Lakers vs Warriors Prediction</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span class="text-muted-foreground">Competitors predicted:</span><span class="text-destructive">Warriors -4.5</span></div>
+              <div class="flex justify-between"><span class="text-muted-foreground">We predicted:</span><span class="text-success">Lakers +2.5</span></div>
+              <div class="flex justify-between"><span class="text-muted-foreground">Actual result:</span><span class="text-success font-bold">Lakers won by 6</span></div>
+            </div>
+          </div>
+
+          <div class="text-sm text-muted-foreground">
+            <h5 class="font-semibold text-accent mb-2">Our edge factors:</h5>
+            <ul class="space-y-1 ml-4 list-disc">
+              <li>Referee tends to favor underdogs by 2.3 points</li>
+              <li>Warriors had 18% more travel fatigue</li>
+              <li>Social sentiment showed Lakers motivation spike</li>
+              <li>Arena temperature favored Lakers' playing style</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS OVERVIEW -->
+  <section class="py-16">
+    <div class="container px-6 lg:px-4">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-primary-10 text-primary mb-4">Performance Analytics</div>
+        <h2 class="text-4xl font-bold mb-4">The Missing 0.1% Revolution</h2>
+        <p class="text-xl text-muted-foreground max-w-3xl mx-auto">While others analyze the obvious, we scrape the invisible data layers that determine outcomes. <span class="text-accent font-semibold">This is why our accuracy isn't just better—it's revolutionary.</span></p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="stats-grid"></div>
+
+      <div class="card-style p-6">
+        <div class="flex items-center mb-6">
+          <!-- Trophy inline -->
+          <svg class="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4" stroke-width="1.25"/><path d="M7.835 4.697a3.42 3.42 0 0 1 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 1 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 1 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 1-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 1-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 1-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 1-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 1 .806-1.946 3.42 3.42 0 0 1 3.138-3.138z" stroke-width="1.0"/></svg>
+          <h3 class="text-lg font-bold">Top Performing Sports</h3>
+        </div>
+
+        <div id="top-performers" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED MATCHES -->
+  <section class="py-16" style="background: linear-gradient(180deg, transparent, hsla(var(--secondary)/0.06));">
+    <div class="container px-6 lg:px-4">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-accent-10 text-accent mb-4">Hot Picks</div>
+        <h2 class="text-4xl font-bold mb-4">Featured Match Analysis</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">Our AI algorithms analyze thousands of data points to bring you the most promising opportunities</p>
+      </div>
+
+      <div id="matches-grid" class="grid md:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-card-80 border-t border-border">
+    <div class="container px-6 lg:px-4 py-12">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2">
+            <!-- Target -->
+            <svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="1.2"/></svg>
+            <span class="text-xl font-bold gradient-clip">BetAnalytics Pro</span>
+          </div>
+          <p class="text-muted-foreground">Advanced sports betting analysis powered by AI. Make smarter decisions with data-driven insights.</p>
+          <div class="flex space-x-3">
+            <button class="p-2 rounded-full hover:bg-primary/10"> <!-- Twitter --> <svg class="h-4 w-4" viewBox="0 0 24 24"><path d="M3 21v-2.2a8.1 8.1 0 0 0 6-1.7 4.7 4.7 0 0 1-4.4-3.3 4.7 4.7 0 0 0 2.1-.08 4.7 4.7 0 0 1-3.8-4.6v-.06a4.7 4.7 0 0 0 2.1.6 4.7 4.7 0 0 1-1.5-6.3 13.4 13.4 0 0 0 9.7 4.9 4.7 4.7 0 0 1 8-4.3 9.5 9.5 0 0 0 3-1.2 4.7 4.7 0 0 1-2.1 2.6 9.4 9.4 0 0 0 2.7-.7 9.9 9.9 0 0 1-2.4 2.4"/></svg></button>
+            <button class="p-2 rounded-full hover:bg-primary/10"> Facebook </button>
+            <button class="p-2 rounded-full hover:bg-primary/10"> Instagram </button>
+            <button class="p-2 rounded-full hover:bg-primary/10"> Mail</button>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-4">Sports</h3>
+          <nav class="space-y-2 text-sm text-muted-foreground">
+            <a href="#" class="block hover:text-primary">NFL</a>
+            <a href="#" class="block hover:text-primary">NBA</a>
+            <a href="#" class="block hover:text-primary">MLB</a>
+            <a href="#" class="block hover:text-primary">Soccer</a>
+            <a href="#" class="block hover:text-primary">Tennis</a>
+          </nav>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-4">Features</h3>
+          <nav class="space-y-2 text-sm text-muted-foreground">
+            <a href="#" class="block hover:text-primary">Live Odds</a>
+            <a href="#" class="block hover:text-primary">AI Predictions</a>
+            <a href="#" class="block hover:text-primary">Statistical Analysis</a>
+            <a href="#" class="block hover:text-primary">Trend Tracking</a>
+            <a href="#" class="block hover:text-primary">Premium Insights</a>
+          </nav>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-4">Company</h3>
+          <nav class="space-y-2 text-sm text-muted-foreground">
+            <a href="#" class="block hover:text-primary">About Us</a>
+            <a href="#" class="block hover:text-primary">Contact</a>
+            <a href="#" class="block hover:text-primary">Privacy Policy</a>
+            <a href="#" class="block hover:text-primary">Terms of Service</a>
+            <a href="#" class="block hover:text-primary">Support</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
+        <p class="text-sm text-muted-foreground">© 2025 BetAnalytics Pro. All rights reserved.</p>
+        <div class="flex items-center space-x-4 mt-4 sm:mt-0">
+          <span class="px-2 py-1 rounded bg-secondary text-xs">Responsible Betting</span>
+          <span class="px-2 py-1 rounded border border-primary/30 text-primary text-xs">18+ Only</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+ 
+  <script src="analytics.js"></script>
+</body>
+</html>
