@@ -124,7 +124,7 @@ const matches = [
   }
 ];
 
-/* ---------- Rendering functions ---------- */
+
 
 function renderCompetitorsTable() {
   const tbody = document.getElementById("competitors-table");
